@@ -34,11 +34,11 @@ var questions = [
         answer: "console.log"
     }];
 
-
-var score = 0;
+//current question
 var currIndex = 0;
 var timeLeft = 60;
 var listEl = document.createElement("ul");
+//so that the timer actually stops when I want it to
 var timeInterval = 0;
 
 begin.addEventListener("click", function (event) {
@@ -57,15 +57,19 @@ begin.addEventListener("click", function (event) {
 });
 
 function generate() {
+    //remove starting button
     begin.remove();
+    
     questionEl.innerHTML = "";
     choices.innerHTML = "";
 
     if (currIndex < questions.length) {
         questionEl.innerHTML = questions[currIndex].question;
 
+        //run through each choice for a question
         for (i = 0; i < questions[currIndex].choices.length; i++) {
             var choiceEl = document.createElement("button");
+            //creating and writing to buttons
             choiceEl.innerHTML = questions[currIndex].choices[i];
             // console.log("should be generating");
             choiceEl.addEventListener("click", (compare)); 
@@ -82,6 +86,7 @@ function compare(event) {
         if (element.innerText == questions[currIndex].answer) {
             timeLeft += 10;
             // console.log("correct.", element.innerText, " is ", questions[currIndex].answer);
+            //next question
             currIndex++;
             
             if (currIndex >= questions.length) {
@@ -140,7 +145,6 @@ function finish() {
             var score = document.createElement("li");
             score.textContent = scoreboard[i].initials + scoreboard[i].score;
             ScoreEl.appendChild(score);
-            
         }
     })
 }
