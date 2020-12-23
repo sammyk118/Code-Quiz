@@ -1,7 +1,7 @@
 var begin = document.querySelector("#start");
 var timerEl = document.querySelector("#timer");
-var questionSect = document.querySelector("#questionSect");
-var choicesList = document.querySelector("#choicesList");
+var questionEl = document.querySelector("#questionSect");
+var choicesEl = document.querySelector("#choices");
 
 
 //array of objects to hold all the question data
@@ -37,7 +37,8 @@ var questions = [
 
 var score = 0;
 var currIndex = 0;
-var timeleft = 60;
+var timeLeft = 60;
+var listEl = document.createElement("ul");
 
 begin.addEventListener("click", function (event) {
 
@@ -55,8 +56,38 @@ begin.addEventListener("click", function (event) {
 
 
 function generate(currIndex) {
-    
-}
+    questionEl.innerHTML = "";
 
+    if (currIndex < questions.length) {
+        questionEl.innerHTML = questions[currIndex].title;
+
+
+
+        for (i = 0; i < questions[currIndex].choices.length; i++) {
+            var choiceEl = document.createElement("button");
+            choiceEl.innerText = questions[currIndex].choices[i];
+
+            choiceEl.addEventListener("click", function (event) {
+                
+                if (choiceEl.innerText === questions[currIndex].answer) {
+                    timeLeft += 10;
+                }
+                else {
+                    timeLeft -= 10;
+                }
+                questionEl.innerHTML = "";
+                if (currIndex === questions.length) {
+                    return;
+                }
+                else {
+                    currIndex++;
+                    generate();
+                }
+            });
+            choicesEl.append(choiceEl);
+        }
+    }
+}
+console.log(questions.length);
 
 
