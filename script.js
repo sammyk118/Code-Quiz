@@ -55,39 +55,83 @@ begin.addEventListener("click", function (event) {
 });
 
 
-function generate(currIndex) {
+function generate() {
+    begin.remove();
     questionEl.innerHTML = "";
+    choices.innerHTML = "";
 
     if (currIndex < questions.length) {
-        questionEl.innerHTML = questions[currIndex].title;
+        questionEl.innerHTML = questions[currIndex].question;
 
 
 
         for (i = 0; i < questions[currIndex].choices.length; i++) {
             var choiceEl = document.createElement("button");
-            choiceEl.innerText = questions[currIndex].choices[i];
-
-            choiceEl.addEventListener("click", function (event) {
-                
-                if (choiceEl.innerText === questions[currIndex].answer) {
-                    timeLeft += 10;
-                }
-                else {
-                    timeLeft -= 10;
-                }
-                questionEl.innerHTML = "";
-                if (currIndex === questions.length) {
-                    return;
-                }
-                else {
-                    currIndex++;
-                    generate();
-                }
-            });
-            choicesEl.append(choiceEl);
+            choiceEl.innerHTML = questions[currIndex].choices[i];
+            console.log("should be generating");
+            choiceEl.addEventListener("click", (compare)); 
+                choicesEl.append(choiceEl);
+            
         }
     }
 }
-console.log(questions.length);
+function compare(event) {
+    var element = event.target;
+
+    if (element.matches("button")) {
+
+        if (element.innerText == questions[currIndex].answer) {
+            timeLeft += 10;
+            console.log("correct.", element.innerText, " is ", questions[currIndex].answer);
+            currIndex++;
+            
+            if (currIndex >= questions.length) {
+                finish();
+            }
+            else {
+                generate();
+            }
+        }
+        else {
+            timeLeft -= 10;
+            console.log("womp womp.", element.innerText, " is not ", questions[currIndex].answer);
+        }
+    }
+    
 
 
+
+}
+
+// function compare(event) {
+//     var element = event.target;
+
+//     if (element.matches("li")) {
+
+//         var createDiv = document.createElement("div");
+//         createDiv.setAttribute("id", "createDiv");
+//         // Correct condition 
+//         if (element.textContent == questions[questionIndex].answer) {
+//             score++;
+//             createDiv.textContent = "Correct! The answer is:  " + questions[questionIndex].answer;
+//             // Correct condition 
+//         } else {
+//             // Will deduct -5 seconds off secondsLeft for wrong answers
+//             secondsLeft = secondsLeft - penalty;
+//             createDiv.textContent = "Wrong! The correct answer is:  " + questions[questionIndex].answer;
+//         }
+
+//     }
+//     // Question Index determines number question user is on
+//     questionIndex++;
+
+//     if (questionIndex >= questions.length) {
+//         // All done will append last page with user stats
+//         allDone();
+//         createDiv.textContent = "End of quiz!" + " " + "You got  " + score + "/" + questions.length + " Correct!";
+//     } else {
+//         render(questionIndex);
+//     }
+//     questionsDiv.appendChild(createDiv);
+
+// }
