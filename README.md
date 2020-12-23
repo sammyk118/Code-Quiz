@@ -1,42 +1,26 @@
 # 04 Web APIs: Code Quiz
 
-As you proceed in your career as a web developer, you will probably be asked to complete a coding assessment, which is typically a combination of multiple-choice questions and interactive challenges. Build a timed code quiz with multiple-choice questions. This app will run in the browser and feature dynamically updated HTML and CSS powered by your JavaScript code. It will also feature a clean and polished user interface and be responsive, ensuring that it adapts to multiple screen sizes.
+This project is about creating a coding quiz with HTML CSS, and JavaScript, but mainly JavaScript. I had to create and display questions and their choices, and when the user selects the correct answer, the page renders the next question, and the time increments. If they get the answer wrong, the timer decrements. 
 
-## User Story
+## Technologies used
+- HTML
+- CSS
+- Javascript
+- Git
+- GitHub
 
-```
-AS A coding bootcamp student
-I WANT to take a timed quiz on JavaScript fundamentals that stores high scores
-SO THAT I can gauge my progress compared to my peers
-```
+[Website](https://sammyk118.github.io/Code-Quiz/)
 
-## Acceptance Criteria
 
-```
-GIVEN I am taking a code quiz
-WHEN I click the start button
-THEN a timer starts and I am presented with a question
-WHEN I answer a question
-THEN I am presented with another question
-WHEN I answer a question incorrectly
-THEN time is subtracted from the clock
-WHEN all questions are answered or the timer reaches 0
-THEN the game is over
-WHEN the game is over
-THEN I can save my initials and score
-```
 
-The following animation demonstrates the application functionality:
 
-![code quiz](./Assets/04-web-apis-homework-demo.gif)
+## Author
 
-### Review
+**Sammy Kroner**
 
-You are required to submit the following for review:
+[LinkedIn](www.linkedin.com/in/samuel-kroner-44aa11169)
 
-* The URL of the functional, deployed application.
+[GitHub](https://github.com/sammyk118)
 
-* The URL of the GitHub repository. Give the repository a unique name and include a README describing the project.
-
-- - -
-© 2019 Trilogy Education Services, a 2U, Inc. brand. All Rights Reserved.
+## Acknowledgements
+UC Berkeley Extension program

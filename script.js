@@ -2,7 +2,7 @@ var begin = document.querySelector("#start");
 var timerEl = document.querySelector("#timer");
 var questionEl = document.querySelector("#questionSect");
 var choicesEl = document.querySelector("#choices");
-
+var ScoreEl = document.querySelector("#highscore");
 
 //array of objects to hold all the question data
 //question, choices, answer
@@ -39,6 +39,7 @@ var score = 0;
 var currIndex = 0;
 var timeLeft = 60;
 var listEl = document.createElement("ul");
+var timeInterval = 0;
 
 begin.addEventListener("click", function (event) {
 
@@ -66,7 +67,7 @@ function generate() {
         for (i = 0; i < questions[currIndex].choices.length; i++) {
             var choiceEl = document.createElement("button");
             choiceEl.innerHTML = questions[currIndex].choices[i];
-            console.log("should be generating");
+            // console.log("should be generating");
             choiceEl.addEventListener("click", (compare)); 
             choicesEl.append(choiceEl);
         }
@@ -80,7 +81,7 @@ function compare(event) {
 
         if (element.innerText == questions[currIndex].answer) {
             timeLeft += 10;
-            console.log("correct.", element.innerText, " is ", questions[currIndex].answer);
+            // console.log("correct.", element.innerText, " is ", questions[currIndex].answer);
             currIndex++;
             
             if (currIndex >= questions.length) {
@@ -92,7 +93,7 @@ function compare(event) {
         }
         else {
             timeLeft -= 10;
-            console.log("womp womp.", element.innerText, " is not ", questions[currIndex].answer);
+            // console.log("womp womp.", element.innerText, " is not ", questions[currIndex].answer);
         }
     }
 }
@@ -101,6 +102,7 @@ function finish() {
     questionEl.innerHTML = "";
     timerEl.remove();
     choicesEl.remove();
+
     if (timeLeft > 0) {
         var newP = document.createElement("p");
         newP.textContent = "Your score is: " + timeLeft;
@@ -108,7 +110,37 @@ function finish() {
         clearInterval(timeInterval);
     }
 
+    var newLabel = document.createElement("label");
+    newLabel.textContent = "enter your initials";
+    questionEl.appendChild(newLabel);
+
     var newInput = document.createElement("input");
     newInput.textContent = "";
     questionEl.appendChild(newInput);
+
+    var newSubmit = document.createElement("button");
+    newSubmit.textContent = "Submit";
+    questionEl.appendChild(newSubmit);
+
+    newSubmit.addEventListener("click", function () {
+        var initials = newInput.value;
+        var yourInfo = { initials: initials, score: timeLeft }
+        var scoreboard = localStorage.getItem("scoreboard");
+        if (scoreboard === null) {
+            scoreboard = [];
+        }
+        else {
+            scoreboard = JSON.parse(scoreboard);
+        }
+        scoreboard.push(yourInfo);
+        var newScore = JSON.stringify(scoreboard);
+        localStorage.setItem("scoreboard", newScore);
+
+        for (i = 0; i < scoreboard.length; i++){
+            var score = document.createElement("li");
+            score.textContent = scoreboard[i].initials + scoreboard[i].score;
+            ScoreEl.appendChild(score);
+            
+        }
+    })
 }
