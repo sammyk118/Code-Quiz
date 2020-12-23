@@ -43,17 +43,17 @@ var listEl = document.createElement("ul");
 begin.addEventListener("click", function (event) {
 
     var timeInterval = setInterval(function () {
-        timerEl.textContent = timeLeft + "seconds remaining";
+        timerEl.textContent = timeLeft;
         timeLeft--;
 
-        if (timeLeft === 0) {
-            timerEl.textContent = "End";
+        if (timeLeft <= 0) {
             clearInterval(timeInterval);
+            timerEl.textContent = "End";
+            finish();
         }
     }, 1000);
     generate(currIndex);
 });
-
 
 function generate() {
     begin.remove();
@@ -63,18 +63,16 @@ function generate() {
     if (currIndex < questions.length) {
         questionEl.innerHTML = questions[currIndex].question;
 
-
-
         for (i = 0; i < questions[currIndex].choices.length; i++) {
             var choiceEl = document.createElement("button");
             choiceEl.innerHTML = questions[currIndex].choices[i];
             console.log("should be generating");
             choiceEl.addEventListener("click", (compare)); 
-                choicesEl.append(choiceEl);
-            
+            choicesEl.append(choiceEl);
         }
     }
 }
+
 function compare(event) {
     var element = event.target;
 
@@ -97,41 +95,20 @@ function compare(event) {
             console.log("womp womp.", element.innerText, " is not ", questions[currIndex].answer);
         }
     }
-    
-
-
-
 }
 
-// function compare(event) {
-//     var element = event.target;
+function finish() {
+    questionEl.innerHTML = "";
+    timerEl.remove();
+    choicesEl.remove();
+    if (timeLeft > 0) {
+        var newP = document.createElement("p");
+        newP.textContent = "Your score is: " + timeLeft;
+        questionEl.appendChild(newP);
+        clearInterval(timeInterval);
+    }
 
-//     if (element.matches("li")) {
-
-//         var createDiv = document.createElement("div");
-//         createDiv.setAttribute("id", "createDiv");
-//         // Correct condition 
-//         if (element.textContent == questions[questionIndex].answer) {
-//             score++;
-//             createDiv.textContent = "Correct! The answer is:  " + questions[questionIndex].answer;
-//             // Correct condition 
-//         } else {
-//             // Will deduct -5 seconds off secondsLeft for wrong answers
-//             secondsLeft = secondsLeft - penalty;
-//             createDiv.textContent = "Wrong! The correct answer is:  " + questions[questionIndex].answer;
-//         }
-
-//     }
-//     // Question Index determines number question user is on
-//     questionIndex++;
-
-//     if (questionIndex >= questions.length) {
-//         // All done will append last page with user stats
-//         allDone();
-//         createDiv.textContent = "End of quiz!" + " " + "You got  " + score + "/" + questions.length + " Correct!";
-//     } else {
-//         render(questionIndex);
-//     }
-//     questionsDiv.appendChild(createDiv);
-
-// }
+    var newInput = document.createElement("input");
+    newInput.textContent = "";
+    questionEl.appendChild(newInput);
+}
